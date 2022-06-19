@@ -1,14 +1,23 @@
-import React from "react";
+import React, { useRef } from "react";
 
-const NewTodo : React.FC = (props) => {
-const submitHandler = (event : React.FormEvent)=>{
-event.preventDefault()
-}
+const NewTodo: React.FC = (props) => {
+const todoTextInput = useRef<HTMLInputElement>(null)
 
-return <form onSubmit={submitHandler}>
-    <label htmlFor="text">Todo Text</label>
-    <input type='text' id="text"/>
-    <button>Add Todo</button>
-</form>
-}
+  const submitHandler = (event: React.FormEvent) => {
+    event.preventDefault();
+    const enteredText = todoTextInput.current!.value
+
+    if(enteredText.trim().length === 0){
+        return
+    }
+  };
+
+  return (
+    <form onSubmit={submitHandler}>
+      <label htmlFor="text">Todo Text</label>
+      <input type="text" id="text" ref={todoTextInput}/>
+      <button>Add Todo</button>
+    </form>
+  );
+};
 export default NewTodo;
